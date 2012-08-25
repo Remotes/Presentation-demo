@@ -385,12 +385,13 @@ define("libs/pusher", function(){});
 define('settings',[], function(){
 	return {
 		applicationKey : "1234567890",
-		authenticationCheckUrl : "http://localhost:8000/auth/check/",
-		channelResolutionUrl : "http://localhost:8000/auth/channel/resolve/",
-		pusherAuthEndpoint : 'http://localhost:8000/pusher/auth/', 
+		authenticationCheckUrl : "http://localhost:5000/auth/check/",
+		channelResolutionUrl : "http://localhost:5000/auth/channel/resolve/",
+		pusherAuthEndpoint : 'http://localhost:5000/pusher/auth/', 
 		pusherApplicationKey : "0b6ee8539603f52808dd",
 		actionEventName : "client-action",
-		loginUrl : "http://localhost:8000/auth/login/"
+		loginUrl : "http://localhost:5000/auth/login/",
+		extensionRegistrationUrl : "http://localhost:5000/extension/register/"
 	};
 });
 define('oats/Channel',["libs/pusher","settings"], function(Pusher, settings){
