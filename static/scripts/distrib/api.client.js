@@ -390,8 +390,7 @@ define('settings',[], function(){
 		pusherAuthEndpoint : 'http://localhost:5000/pusher/auth/', 
 		pusherApplicationKey : "0b6ee8539603f52808dd",
 		actionEventName : "client-action",
-		loginUrl : "http://localhost:5000/auth/login/",
-		extensionRegistrationUrl : "http://localhost:5000/extension/register/"
+		loginUrl : "http://localhost:5000/auth/login/"
 	};
 });
 define('oats/Channel',["libs/pusher","settings"], function(Pusher, settings){
@@ -446,7 +445,7 @@ define('oats/Channel',["libs/pusher","settings"], function(Pusher, settings){
 	function RemoteSender(channelName){
 		var pusher = __getPusher();
 		
-		this.channel = pusher.subscribe("private-" + channelName);
+		this.channel = pusher.subscribe("presence-" + channelName);
 
 		this.channel.bind('pusher:subscription_succeeded', function() {
 			console.log("pusher initiailized OK");
@@ -461,14 +460,17 @@ define('oats/Channel',["libs/pusher","settings"], function(Pusher, settings){
 		send : function(data){
 			this.channel.trigger(settings.actionEventName, data);
 		},
+
 		onReady : function(){},
 		onError : function(){}
+		
 	};
 
 	function RemoteReceiver(channelName){
 		var pusher = __getPusher();
 		var that = this;
-		this.channel = pusher.subscribe("private-" + channelName); 
+
+		this.channel = pusher.subscribe("presence-" + channelName); 
 		
 		this.channel.bind(settings.actionEventName, function(data) {
         	that.onReceive(data);
@@ -476,6 +478,12 @@ define('oats/Channel',["libs/pusher","settings"], function(Pusher, settings){
 
         this.channel.bind('pusher:subscription_succeeded', function() {
 			console.log("pusher initiailized OK");
+			
+			//trigger onSubscribersChanged with a list of subscribers on this channel
+			if(typeof that.onSubscribersChanged !== 'undefined'){
+				that.onSubscribersChanged(that.getSubscribers());
+			}
+
 			if(typeof that.onReady !== 'undefined'){
 				that.onReady();
 			}else{
@@ -489,14 +497,44 @@ define('oats/Channel',["libs/pusher","settings"], function(Pusher, settings){
 				that.onError();
 			}
 		});
+
+		this.channel.bind('pusher:member_added', function(member) {
+			if(typeof that.onSubscribersChanged !== 'undefined'){
+				that.onSubscribersChanged(that.getSubscribers());
+			}
+		});
+
+		this.channel.bind('pusher:member_removed', function(member) {
+			if(typeof that.onSubscribersChanged !== 'undefined'){
+				that.onSubscribersChanged(that.getSubscribers());
+			}
+		});
 	}
 
 	RemoteReceiver.prototype = {
 		onReady : function(){},
 		onError : function(){},
 		onReceive : function(data){},
-		onReady : function(){},
-		onError : function(){}
+		onSubscribersChanged : function(subscribers){},
+		getSubscribers : function(){
+			console.log("enumerating members", this.channel.members);
+
+			var me = this.channel.members.me;
+			var members = [];
+
+			this.channel.members.each(function(member) {
+			  
+			  if(me){
+			  	if(member.id != me.id){
+			  		members.push(member);	
+			  	}
+			  } else {
+			  	members.push(member);
+			  }
+			});
+
+			return members;
+		}
 	};
 
 	return {
@@ -535,26 +573,20 @@ define('oats/Catcher',["./Channel"], function(Channels){
 			that.onEvent(data);
 
 			switch(data.action){
-				case "drag":
-					that.onDrag();	
-					break;
 				case "swipe-left":
 					that.onSwipeLeft();
 					break;
 				case "swipe-right":
 					that.onSwipeRight();
 					break;
+				case "swipe-up":
+					that.onSwipeUp();
+					break;
+				case "swipe-down":
+					that.onSwipeDown();
+					break;
 				case "tap":
 					that.onTap();
-					break;
-				case "double-tap":
-					that.onDoubletap();
-					break;
-				case "hold":
-					that.onHold();
-					break;
-				case "release":
-					that.onRelease();
 					break;
 			}
 		};
@@ -563,13 +595,11 @@ define('oats/Catcher',["./Channel"], function(Channels){
 
 	Catcher.prototype = {
 		onEvent : function(data){},
-		onDrag : function(){},
 		onSwipeLeft : function(){},
 		onSwipeRight : function(){},
+		onSwipeUp : function(){},
+		onSwipeDown : function(){},
 		onTap : function(){},
-		onDoubletap : function(){},
-		onHold : function() {},
-		onRelease : function() {}
 	};
 
 	return Catcher;
@@ -661,7 +691,9 @@ define('oats/Client',["./Catcher", "./ClientBootstrap", "settings"],
 				this.catcher = new Catcher(channelName, this.remote);
 				this.catcher.onSwipeLeft = this.onSwipeLeft;
 				this.catcher.onSwipeRight = this.onSwipeRight;
-				this.catcher.onDoubletap = this.onDoubletap;
+				this.catcher.onSwipeUp = this.onSwipeUp;
+				this.catcher.onSwipeDown = this.onSwipeDown;
+
 				this.catcher.onTap = this.onTap;
 				this.catcher.onEvent = this.onEvent;
 			},
@@ -670,7 +702,8 @@ define('oats/Client',["./Catcher", "./ClientBootstrap", "settings"],
 			onEvent : function(data){ },
 			onSwipeLeft : function() { },
 	        onSwipeRight : function(){ },
-	        onDoubletap : function() { },
+	        onSwipeUp : function(){ },
+	        onSwipeDown : function(){ },
 	        onTap : function() { },
 		};
 	
