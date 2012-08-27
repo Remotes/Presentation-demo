@@ -718,7 +718,9 @@ define('oats/Client',["./Catcher", "./ClientBootstrap", "settings"],
 				this.catcher.onSwipeRight = this.onSwipeRight;
 				this.catcher.onSwipeUp = this.onSwipeUp;
 				this.catcher.onSwipeDown = this.onSwipeDown;
-
+				this.catcher.onDragStart = this.onDragStart;
+				this.catcher.onDragEnd = this.onDragEnd;
+				this.catcher.onDragging = this.onDragging;
 				this.catcher.onTap = this.onTap;
 				this.catcher.onEvent = this.onEvent;
 			},
