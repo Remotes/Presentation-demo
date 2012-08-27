@@ -341,6 +341,14 @@ function linkify( selector ) {
 					Reveal.navigateRight();
 				};
 
+				remoatsClient.onSwipeUp = function(){ 
+					Reveal.navigateUp();
+				};
+
+				remoatsClient.onSwipeDown = function(){ 
+					Reveal.navigateDown();
+				};
+
 				remoatsClient.onTap = function() { 
 					Reveal.toggleOverview();
 				};
