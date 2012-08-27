@@ -377,17 +377,22 @@ function linkify( selector ) {
 					};
 				}
 
+				function updatePointerPosition(x,y){
+					document.getElementById("laser-pointer").style.left = x + "px";
+					document.getElementById("laser-pointer").style.top = y + "px";
+				}
+
 				remoatsClient.onDragStart = function(dx, dy){
 					
 					var  p = calculatePointerPosition(dx,dy);
-					$("#laser-pointer").css("left", p.x + "px").css("top", p.y + "px");
+					updatePointerPosition(p.x,p.y);
 
 					console.log("drag start", dx, dy);
 				};
 
 				remoatsClient.onDragEnd = function(dx, dy){
 
-					$("#laser-pointer").css("left", "-10px").css("top", "-10px");		
+					updatePointerPosition(-20,-20);
 
 					console.log("drag end", dx, dy);
 				};
@@ -395,7 +400,7 @@ function linkify( selector ) {
 				remoatsClient.onDragging = function(dx, dy){
 					
 					var  p = calculatePointerPosition(dx,dy);
-					$("#laser-pointer").css("left", p.x + "px").css("top", p.y + "px");
+					updatePointerPosition(p.x,p.y);
 
 					console.log("dragging", dx, dy);
 				};
