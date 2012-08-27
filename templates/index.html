@@ -34,6 +34,21 @@
 
 		</script>
 
+		<style type="text/css">
+
+			#laser-pointer {
+				position: absolute;
+				left: -10px;
+				top: -10px;
+				width: 20px;
+				height: 20px;
+				background-color: red;
+				border-radius: 36px;
+				opacity: 0.7;
+			}
+
+		</style>
+
 		{% if debug %}
 			<script type="text/javascript" src="{% static 'scripts/distrib/api.client.js' %}"></script>
 		{% else %}	
@@ -47,6 +62,8 @@
 	
 	<body>
 		
+		<div id="laser-pointer"></div>
+
 		<div class="reveal">
 
 			<!-- Used to fade in a background when a specific slide state is reached -->
@@ -353,15 +370,33 @@ function linkify( selector ) {
 					Reveal.toggleOverview();
 				};
 
+				function calculatePointerPosition(dx,dy){
+					return {
+						x : Math.floor(window.innerWidth * dx),
+						y : Math.floor(window.innerHeight * dy)
+					};
+				}
+
 				remoatsClient.onDragStart = function(dx, dy){
+					
+					var  p = calculatePointerPosition(dx,dy);
+					$("#laser-pointer").css("left", p.x + "px").css("top", p.y + "px");
+
 					console.log("drag start", dx, dy);
 				};
 
 				remoatsClient.onDragEnd = function(dx, dy){
+
+					$("#laser-pointer").css("left", "-10px").css("top", "-10px");		
+
 					console.log("drag end", dx, dy);
 				};
 
 				remoatsClient.onDragging = function(dx, dy){
+					
+					var  p = calculatePointerPosition(dx,dy);
+					$("#laser-pointer").css("left", p.x + "px").css("top", p.y + "px");
+
 					console.log("dragging", dx, dy);
 				};
 
