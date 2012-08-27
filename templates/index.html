@@ -352,6 +352,19 @@ function linkify( selector ) {
 				remoatsClient.onTap = function() { 
 					Reveal.toggleOverview();
 				};
+
+				remoatsClient.onDragStart = function(dx, dy){
+					console.log("drag start", dx, dy);
+				};
+
+				remoatsClient.onDragEnd = function(dx, dy){
+					console.log("drag end", dx, dy);
+				};
+
+				remoatsClient.onDragging = function(dx, dy){
+					console.log("dragging", dx, dy);
+				};
+
 			}, 3000);
 
 

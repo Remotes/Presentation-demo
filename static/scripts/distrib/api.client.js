@@ -576,17 +576,39 @@ define('oats/Catcher',["./Channel"], function(Channels){
 				case "swipe-left":
 					that.onSwipeLeft();
 					break;
+
 				case "swipe-right":
 					that.onSwipeRight();
 					break;
+
 				case "swipe-up":
 					that.onSwipeUp();
 					break;
+
 				case "swipe-down":
 					that.onSwipeDown();
 					break;
+
 				case "tap":
 					that.onTap();
+					break;
+
+				case "drag-start":
+					if(typeof that.onDragStart !== 'undefined'){
+						that.onDragStart(data.dx,data.dy);
+					}
+					break;
+
+				case "drag-end":
+					if(typeof that.onDragEnd !== 'undefined'){
+						that.onDragEnd(data.dx,data.dy);
+					}
+					break;
+
+				case "dragging":
+					if(typeof that.onDragging !== 'undefined'){
+						that.onDragging(data.dx,data.dy);
+					}
 					break;
 			}
 		};
@@ -599,6 +621,9 @@ define('oats/Catcher',["./Channel"], function(Channels){
 		onSwipeRight : function(){},
 		onSwipeUp : function(){},
 		onSwipeDown : function(){},
+		onDragStart : function(dx, dy){},
+		onDragEnd : function(dx, dy){},
+		onDragging : function(dx, dy){},
 		onTap : function(){},
 	};
 
@@ -704,6 +729,9 @@ define('oats/Client',["./Catcher", "./ClientBootstrap", "settings"],
 	        onSwipeRight : function(){ },
 	        onSwipeUp : function(){ },
 	        onSwipeDown : function(){ },
+	        onDragStart : function(dx, dy){},
+			onDragEnd : function(dx, dy){},
+			onDragging : function(dx, dy){},
 	        onTap : function() { },
 		};
 	
