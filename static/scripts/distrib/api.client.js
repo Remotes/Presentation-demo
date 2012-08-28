@@ -1,4 +1,6 @@
-(function () {
+(function (root, factory) {
+	root.Remoats = factory();
+}(this, function () {
 /**
  * almond 0.1.2 Copyright (c) 2011, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
@@ -740,31 +742,5 @@ define('oats/Client',["./Catcher", "./ClientBootstrap", "settings"],
 		return Client;
 
 	}
-);
-requirejs.config({      
-  paths: {
-    "libs" : "../libs",
-    "oats" : "../oats/",
-    "jquery" : "../libs/jquery",
-    "settings" : "../oats/settings.dev"
-  },
-
-  shim: {
-    'jquery' : {
-      exports: '$'
-    }
-  },
-
-  waitSeconds: 15,
-  urlArgs: "bust=" +  (new Date()).getTime()
-
-});
-
-require([
-  "oats/Client"
-], function(Client) {
-  window.Remoats = Client;
-});
-
-define("api/remoats", function(){});
-}());
+);    return require("oats/Client");
+}));
