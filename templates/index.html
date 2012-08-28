@@ -341,35 +341,6 @@ function linkify( selector ) {
 				]
 			});
 			
-			
-			var remoatsClient = new Remoats("1234567890",false);
-
-			remoatsClient.onEvent = function(d) { 
-			if(d.data === "oats.client.registered"){
-			   alert("Remote is ready");
-			 }
-			};
-
-			remoatsClient.onSwipeLeft = function() { 
-				Reveal.navigateLeft();
-			};
-
-			remoatsClient.onSwipeRight = function(){ 
-				Reveal.navigateRight();
-			};
-
-			remoatsClient.onSwipeUp = function(){ 
-				Reveal.navigateUp();
-			};
-
-			remoatsClient.onSwipeDown = function(){ 
-				Reveal.navigateDown();
-			};
-
-			remoatsClient.onTap = function() { 
-				Reveal.toggleOverview();
-			};
-
 			function calculatePointerPosition(dx,dy){
 				return {
 					x : Math.floor(window.innerWidth * dx),
@@ -382,28 +353,58 @@ function linkify( selector ) {
 				document.getElementById("laser-pointer").style.top = y + "px";
 			}
 
-			remoatsClient.onDragStart = function(dx, dy){
+
+			var remoatsClient = new Remoats("1234567890",{
 				
-				var  p = calculatePointerPosition(dx,dy);
-				updatePointerPosition(p.x,p.y);
+				onEvent : function(d) { 
+					if(d.data === "oats.client.registered"){
+					   alert("Remote is ready");
+					}
+				},
 
-				console.log("drag start", dx, dy);
-			};
+				onSwipeLeft : function() { 
+					Reveal.navigateLeft();
+				},
 
-			remoatsClient.onDragEnd = function(dx, dy){
+				onSwipeRight : function(){ 
+					Reveal.navigateRight();
+				},
 
-				updatePointerPosition(-20,-20);
+				onSwipeUp : function(){ 
+					Reveal.navigateUp();
+				},
 
-				console.log("drag end", dx, dy);
-			};
+				onSwipeDown : function(){ 
+					Reveal.navigateDown();
+				},
 
-			remoatsClient.onDragging = function(dx, dy){
-				
-				var  p = calculatePointerPosition(dx,dy);
-				updatePointerPosition(p.x,p.y);
+				onTap : function() { 
+					Reveal.toggleOverview();
+				},	
 
-				console.log("dragging", dx, dy);
-			};
+				onDragStart : function(dx, dy){
+			
+					var  p = calculatePointerPosition(dx,dy);
+					updatePointerPosition(p.x,p.y);
+
+					console.log("drag start", dx, dy);
+				},
+
+				onDragEnd : function(dx, dy){
+
+					updatePointerPosition(-20,-20);
+
+					console.log("drag end", dx, dy);
+				},
+
+				onDragging : function(dx, dy){
+					
+					var  p = calculatePointerPosition(dx,dy);
+					updatePointerPosition(p.x,p.y);
+
+					console.log("dragging", dx, dy);
+				}
+			});
 
 		</script>
 
