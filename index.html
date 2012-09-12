@@ -1,5 +1,3 @@
-{% load staticfiles %}
-
 <!doctype html>  
 <html lang="en">
 	
@@ -14,21 +12,21 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		
-		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 		
-		<link rel="stylesheet" href="{% static 'stylesheets/main.css' %}">
-		<link rel="stylesheet" href="{% static 'stylesheets/theme/default.css' %}">
+		<link rel="stylesheet" href="stylesheets/main.css">
+		<link rel="stylesheet" href="stylesheets/theme/default.css">
 
 		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="{% static 'lib/css/zenburn.css' %}">
+		<link rel="stylesheet" href="lib/css/zenburn.css">
 
 		<script>
 			// If the query includes 'print-pdf' we'll use the PDF print sheet
 			
 			if(window.location.search.match( /print-pdf/gi )){
-				document.write( '<link rel="stylesheet" href="{% static 'stylesheets/print/pdf.css' %}" type="text/css" media="print">' );
+				document.write( '<link rel="stylesheet" href="stylesheets/print/pdf.css" type="text/css" media="print">' );
 			} else {
-				document.write( '<link rel="stylesheet" href="{% static 'stylesheets/print/paper.css' %}" type="text/css" media="print">' );
+				document.write( '<link rel="stylesheet" href="stylesheets/print/paper.css" type="text/css" media="print">' );
 			}
 
 
@@ -49,12 +47,9 @@
 
 		</style>
 
-		{% if debug %}
-			<script type="text/javascript" src="{% static 'scripts/distrib/api.client.js' %}"></script>
-		{% else %}	
-			<script type="text/javascript" src="{% static 'scripts/distrib/api.client.prod.js' %}"></script>
-		{% endif %}
-
+		
+		<script type="text/javascript" src="scripts/distrib/api.client.prod.js"></script>
+		
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
@@ -83,7 +78,7 @@
 						support for CSS 3D transforms to see it in its full glory.
 					</p>
 					<p>
-						<i><small>- <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small></i>
+						<i><small>- <a href="https://hakim.se">Hakim El Hattab</a> / <a href="https://twitter.com/hakimel">@hakimel</a></small></i>
 					</p>
 
 					<aside class="notes">
@@ -176,10 +171,10 @@
 						You can select from different transitions, like:
 					</p>
 					<ul>
-						<li><a href="http://lab.hakim.se/reveal-js/?transition=cube">Cube</a></li>
-						<li><a href="http://lab.hakim.se/reveal-js/?transition=page">Page</a></li>
-						<li><a href="http://lab.hakim.se/reveal-js/?transition=concave">Concave</a></li>
-						<li><a href="http://lab.hakim.se/reveal-js/?transition=linear">Linear</a></li>
+						<li><a href="https://lab.hakim.se/reveal-js/?transition=cube">Cube</a></li>
+						<li><a href="https://lab.hakim.se/reveal-js/?transition=page">Page</a></li>
+						<li><a href="https://lab.hakim.se/reveal-js/?transition=concave">Concave</a></li>
+						<li><a href="https://lab.hakim.se/reveal-js/?transition=linear">Linear</a></li>
 					</ul>
 				</section>
 
@@ -223,10 +218,10 @@
 				<section>
 					<h2>Clever Quotes</h2>
 					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+						These guys come in two forms, inline: <q cite="https://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
 						The nice thing about standards is that there are so many to choose from</q> and block:
 					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+					<blockquote cite="https://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
 						For years there has been a theory that millions of monkeys typing at random on millions of typewriters would 
 						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.
 					</blockquote>
@@ -316,8 +311,8 @@ function linkify( selector ) {
 			
 		</div>
 
-		<script src="{% static 'lib/js/head.min.js' %}"></script>
-		<script src="{% static 'scripts/reveal.min.js' %}"></script>
+		<script src="lib/js/head.min.js"></script>
+		<script src="scripts/reveal.min.js"></script>
 
 		<script>
 			
@@ -332,12 +327,12 @@ function linkify( selector ) {
 
 				// Optional libraries used to extend on reveal.js
 				dependencies: [
-					{ src: '{% static "lib/js/highlight.js" %}', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
-					{ src: '{% static "lib/js/classList.js" %}', condition: function() { return !document.body.classList; } },
-					{ src: '{% static "lib/js/showdown.js" %}', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '{% static "lib/js/data-markdown.js" %}', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'socket.io/socket.io.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
-					{ src: '{% static "plugin/speakernotes/client.js" %}', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
+					{ src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
 				]
 			});
 			
