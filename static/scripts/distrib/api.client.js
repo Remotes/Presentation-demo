@@ -1539,19 +1539,19 @@ define('oats/Events',["underscore"], function(_){
 define('oats/Channels/LocalReceiver',["underscore","oats/Events"], function(_,Events){
 
 	var localMessageFilter = function(message){ return message.destination === "oats"; };
-	
+
 
 	function LocalReceiver(){
 		var that = this;
 		window.addEventListener("message", _.bind(function(event) {
 			console.log("[LOCAL RECEIVER] got message", event);
 
-		    if (event.source != window) return;
-			
-		  	if(localMessageFilter(event.data)){
-		  		this.trigger("Receive", event.data);
-		  	}
-			
+			if (event.source != window) return;
+
+			if(localMessageFilter(event.data)){
+				this.trigger("Receive", event.data);
+			}
+
 		},this), false);
 	}
 
@@ -1575,9 +1575,11 @@ define('oats/ApiSpecification',[], function(){
 			"swipe-up",
 			"swipe-down",
 			"tap",
-			"drag-start",
-			"drag-end",
-			"dragging"
+			"hold",
+			"release"
+			// "drag-start",
+			// "drag-end",
+			// "dragging",
 		],
 
 		signals : {
@@ -1683,14 +1685,15 @@ define('oats/Client',[ "underscore",
 
 		_.extend(Client.prototype, Events, {
 			__setupClient : function(){
-				new Receiver().on("Receive", function(data){	
+				new Receiver().on("Receive", function(data){
+
 					if(typeof data.action !== 'undefined'){
 						
 						if(!ApiSpecification.isValidAction(data.action)){
 							throw new Error("Invalid action: " + data.action);
 						}
 
-						this.trigger(data.action);
+						this.trigger(data.action, data.actionArgs);
 					}
 
 					if(typeof data.signal !== 'undefined'){
