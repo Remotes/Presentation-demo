@@ -48,7 +48,7 @@
 		</style>
 
 		
-		<script type="text/javascript" src="https://raw.github.com/Remoats/Remoats/master/dist/api.client.js"></script>
+		<script type="text/javascript" src="https://raw.github.com/Remotes/Remotes/master/dist/remotes.min.js"></script>
 
 		
 		<!--[if lt IE 9]>
@@ -350,20 +350,17 @@ function linkify( selector ) {
 			}
 
 
-			new Remoats("1234567890")
+			new Remoats("preview")
 				.on("swipe-left", function(e){ Reveal.navigateLeft(); })
 				.on("swipe-right", function(e){ Reveal.navigateRight(); })
 				.on("swipe-up", function(e){ Reveal.navigateUp(); })
 				.on("swipe-down", function(e){ Reveal.navigateDown(); })
 				.on("tap", function(e){ 
-					console.log("[TAP] args:", e);
 					Reveal.toggleOverview(); 
 				})
 				.on("hold", function(e){
-					console.log("[HOLD] args:",e);
 				})
 				.on("release", function(){
-					console.log("[RELEASE");
 				});	
 
 		</script>
