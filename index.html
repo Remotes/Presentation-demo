@@ -120,6 +120,8 @@
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.min.js"></script>
 
+		<script type="text/javascript" src="https://raw.github.com/Remotes/Remotes/master/dist/remotes.min.js"></script>
+
 		<script>
 			
 			// Full list of configuration options available here:
@@ -143,6 +145,19 @@
 				]
 			});
 			
+			new Remotes("preview")
+				.on("swipe-left", function(e){ Reveal.navigateRight(); })
+				.on("swipe-right", function(e){ Reveal.navigateLeft(); })
+				.on("swipe-up", function(e){ Reveal.navigateDown(); })
+				.on("swipe-down", function(e){ Reveal.navigateUp(); })
+				.on("tap", function(e){ 
+					Reveal.toggleOverview(); 
+				})
+				.on("hold", function(e){
+				})
+				.on("release", function(){
+				});	
+
 		</script>
 
 	</body>
